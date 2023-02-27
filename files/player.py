@@ -16,7 +16,7 @@ class Player:
         self.rect = pg.Rect((self.x, self.y), (self.width, self.height))
         self.speed = 0.3
 
-        self.cur_mode = "walk" # changes to "idle", "walk", "hit" or "die"
+        self.cur_mode = "idle" # changes to "idle", "walk", "hit" or "die"
         self.cur_frame = 0 # from 0-5/0-3/0-2 depending on self.cur_mode
         self.cur_direction = "right"
 
@@ -57,31 +57,48 @@ class Player:
             self.animate_perf = t.perf_counter()
         
     def move(self, keys, dT):
-        pos = pg.math.Vector2(self.rect.x, self.rect.y)
+        if self.cur_mode != "hit" or self.cur_mode != "die":
+            pos = pg.math.Vector2(self.rect.x, self.rect.y)
 
-        up = keys[pg.K_w] #or keys[pg.K_UP]
-        down = keys[pg.K_s] #or keys[pg.K_DOWN]
-        left = keys[pg.K_a] #or keys[pg.K_LEFT]
-        right = keys[pg.K_d] #or keys[pg.K_RIGHT]
+            up = keys[pg.K_w] #or keys[pg.K_UP]
+            down = keys[pg.K_s] #or keys[pg.K_DOWN]
+            left = keys[pg.K_a] #or keys[pg.K_LEFT]
+            right = keys[pg.K_d] #or keys[pg.K_RIGHT]
 
-        if up:
-            self.vy = max(self.vy - self.vacc, -self.vmax)
-        if down:
-            self.vy = min(self.vy + self.vacc, self.vmax)
-        if left:
-            self.vx = max(self.vx - self.vacc, -self.vmax)
-        if right:
-            self.vx = min(self.vx + self.vacc, self.vmax)
+            self.cur_mode = "idle"
+            if up or down or left or right:
+                self.cur_mode = "walk"
+                if up and not down and not left and not right:
+                    self.cur_direction = "back"
+                elif down and not up and not left and not right:
+                    self.cur_direction = "front"
+                elif right and not left and not down and not up:
+                    self.cur_direction = "right"
+                elif left and not right and not down and not up:
+                    self.cur_direction = "left"
 
-        self.vx *= 0.8
-        self.vy *= 0.8
-        # print(self.vx, self.vy)
+            if up:
+                self.vy = max(self.vy - self.vacc, -self.vmax)
+            if down:
+                self.vy = min(self.vy + self.vacc, self.vmax)
+            if left:
+                self.vx = max(self.vx - self.vacc, -self.vmax)
+            if right:
+                self.vx = min(self.vx + self.vacc, self.vmax)
 
-        move = pg.math.Vector2(right - left, down - up)
-        if move.length_squared() > 0:
-            move.scale_to_length(self.speed * dT)
-            move.x *= abs(self.vx)
-            move.y *= abs(self.vy)
-            print(self.vx, self.vy)
-            pos += move  
-            self.rect.topleft = round(pos.x), round(pos.y)
+            self.vx *= 0.8
+            self.vy *= 0.8
+            # print(self.vx, self.vy)
+
+            move = pg.math.Vector2(right - left, down - up)
+            if move.length_squared() > 0:
+                move.scale_to_length(self.speed * dT)
+                move.x *= abs(self.vx)
+                move.y *= abs(self.vy)
+                pos += move  
+                self.rect.topleft = round(pos.x), round(pos.y)
+
+    def hit(self, keys):
+        if keys[pg.K_SPACE]:
+            self.cur_mode = "hit"
+            self.cur_frame = 0

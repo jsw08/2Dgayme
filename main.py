@@ -8,7 +8,7 @@ screen = pg.display.set_mode((600,600),pg.RESIZABLE)
 pg.display.set_caption("template")
 
 playing = True
-keys = [pg.K_w, pg.K_a, pg.K_s, pg.K_d]
+keys = [pg.K_w, pg.K_a, pg.K_s, pg.K_d, pg.K_SPACE]
 keys_list = {}
 
 for i in keys:
@@ -39,8 +39,9 @@ while playing:
     screen.fill((0, 0, 0))
 
     # Player
-    player.animate()
+    player.hit(keys_list)
     player.move(keys_list, dT)
+    player.animate()
     player.draw(screen)
 
     pg.display.flip()
