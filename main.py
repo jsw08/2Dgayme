@@ -25,5 +25,3 @@ while playing:
         pg.display.flip()
 
 pg.quit()
-
-# omg edits
