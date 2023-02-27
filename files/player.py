@@ -8,6 +8,10 @@ class Player:
         self.y = y
         self.width = self.height = 48
 
+        self.cur_mode = "idle" # changes to "idle", "walk", "hit" or "die"
+        self.cur_frame = 0 # from 0-5/0-3/0-2 depending on self.cur_mode
+        self.cur_direction = "front"
+
         # constant variables
         self.num_of_idle_frames = 6
         self.num_of_walk_frames = 6
@@ -26,7 +30,11 @@ class Player:
 
 
     def draw(self, screen):
-        pass
+        if self.cur_mode != "die":
+            img_blit = eval(f"self.frames['{self.cur_mode}_{self.cur_direction}_{int(self.cur_frame+1)}']")
+        else:
+            img_blit = eval(f"self.frames['{self.cur_mode}_{int(self.cur_frame+1)}']")
+        screen.blit(img_blit,(self.x, self.y))
 
     def animate(self, dT):
         pass
