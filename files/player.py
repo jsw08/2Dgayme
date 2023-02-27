@@ -11,7 +11,7 @@ class Player:
         self.vy = 0
         self.vmax = 1.25
         self.vacc = 0.1 # velocity acceleration
-        self.width = self.height = 48
+        self.width = self.height = int(48 * 2)
 
         self.rect = pg.Rect((self.x, self.y), (self.width, self.height))
         self.speed = 0.3
@@ -39,11 +39,16 @@ class Player:
                         if direction == "left":
                             src = pg.image.load(f"{self.player_path}{mode}_right ({x+1}).png")
                             src = pg.transform.flip(src, True, False)
+                            src = pg.transform.scale(src, (self.rect.w, self.rect.h))
                             self.frames[f"{mode}_{direction}_{x+1}"] = src
                         else:
-                            self.frames[f"{mode}_{direction}_{x+1}"] = pg.image.load(f"{self.player_path}{mode}_{direction} ({x+1}).png")
+                            src = pg.image.load(f"{self.player_path}{mode}_{direction} ({x+1}).png")
+                            src = pg.transform.scale(src, (self.rect.w, self.rect.h))
+                            self.frames[f"{mode}_{direction}_{x+1}"] = src
                 else:
-                    self.frames[f"{mode}_{x+1}"] = pg.image.load(f"{self.player_path}{mode} ({x+1}).png")
+                    src = pg.image.load(f"{self.player_path}{mode} ({x+1}).png")
+                    src = pg.transform.scale(src, (self.rect.w, self.rect.h))
+                    self.frames[f"{mode}_{x+1}"] = src
 
 
     def draw(self, screen):
