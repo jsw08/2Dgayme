@@ -32,6 +32,7 @@ while playing:
             for i in keys_list:
                 if i != e.key: 
                     keys_list[i] = False   
+        player.move(keys)
         pg.event.pump()
 
         mx, my = pg.mouse.get_pos()
