@@ -1,4 +1,4 @@
-import pygame as np
+import pygame as pg
 import time as t
 import random as r
 
@@ -14,11 +14,15 @@ class Player:
         self.num_of_hit_frames = 4
         self.num_of_die_frames = 3
 
+        self.player_path = "player_frames/"
         self.frames = {}
         for mode in ["idle", "walk", "hit", "die"]:
-            for x in range(eval(f"num_of_{mode}_frames")):
-                print(mode, x)
-
+            for x in range(eval(f"self.num_of_{mode}_frames")): #walk_right_2
+                if mode != "die":
+                    for direction in ["front", "right", "back"]:
+                        self.frames[f"{mode}_{direction}_{x+1}"] = pg.image.load(f"{self.player_path}{mode}_{direction} ({x+1}).png")
+                else:
+                    self.frames[f"{mode}_{direction}_{x+1}"]
 
 
     def draw(self, screen):
