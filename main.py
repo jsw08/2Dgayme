@@ -1,4 +1,7 @@
 import pygame as pg
+import numpy as np
+import time as t
+import random as r
 from files.player import *
 
 player = Player(10,10)
@@ -8,8 +11,15 @@ screen = pg.display.set_mode((600,600),pg.RESIZABLE)
 pg.display.set_caption("template")
 
 playing = True
-keys = [pg.K_w, pg.K_a, pg.K_s, pg.K_d, pg.K_SPACE]
+keys = [pg.K_w, pg.K_a, pg.K_s, pg.K_d, pg.K_SPACE, pg.K_q]
 keys_list = {}
+
+world = np.zeros((10,10),dtype=int)
+scrollx = 0
+scrolly = 0
+
+
+print(world)
 
 for i in keys:
     keys_list[i] = False
@@ -41,8 +51,10 @@ while playing:
     # Player
     player.hit(keys_list)
     player.move(keys_list, dT)
+    player.die(keys_list)
     player.animate()
     player.draw(screen)
+    
 
     pg.display.flip()
 
