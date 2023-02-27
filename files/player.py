@@ -37,16 +37,16 @@ class Player:
                 if mode != "die":
                     for direction in ["front", "right", "left", "back"]:
                         if direction == "left":
-                            src = pg.image.load(f"{self.player_path}{mode}_right ({x+1}).png")
+                            src = pg.image.load(f"{self.player_path}{mode}_right_{x+1}.png")
                             src = pg.transform.flip(src, True, False)
                             src = pg.transform.scale(src, (self.rect.w, self.rect.h))
                             self.frames[f"{mode}_{direction}_{x+1}"] = src
                         else:
-                            src = pg.image.load(f"{self.player_path}{mode}_{direction} ({x+1}).png")
+                            src = pg.image.load(f"{self.player_path}{mode}_{direction}_{x+1}.png")
                             src = pg.transform.scale(src, (self.rect.w, self.rect.h))
                             self.frames[f"{mode}_{direction}_{x+1}"] = src
                 else:
-                    src = pg.image.load(f"{self.player_path}{mode} ({x+1}).png")
+                    src = pg.image.load(f"{self.player_path}{mode}_{x+1}.png")
                     src = pg.transform.scale(src, (self.rect.w, self.rect.h))
                     self.frames[f"{mode}_{x+1}"] = src
 
