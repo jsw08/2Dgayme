@@ -22,7 +22,7 @@ class Player:
                     for direction in ["front", "right", "back"]:
                         self.frames[f"{mode}_{direction}_{x+1}"] = pg.image.load(f"{self.player_path}{mode}_{direction} ({x+1}).png")
                 else:
-                    self.frames[f"{mode}_{direction}_{x+1}"]
+                    self.frames[f"{mode}_{x+1}"] = pg.image.load(f"{self.player_path}{mode} ({x+1}).png")
 
 
     def draw(self, screen):
