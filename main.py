@@ -2,7 +2,7 @@ import pygame as pg
 import numpy as np
 import time as t
 import random as r
-from files.player import *
+from files.entities import *
 
 player = Player(10,10)
 pg.init()
