@@ -31,7 +31,7 @@ while playing:
 
         if e.type == pg.KEYUP:
             for i in keys_list:
-                if i != e.key: 
+                if i == e.key: 
                     keys_list[i] = False   
 
         pg.event.pump()
@@ -45,6 +45,6 @@ while playing:
 
     pg.display.flip()
 
-    dT = clock.tick()
+    dT = clock.tick(60)
 
 pg.quit()
