@@ -1,8 +1,7 @@
 import pygame as pg
+#from files.player import *
 
-from files.player import *
-
-player = Player(10,10)
+#player = Player(10,10)
 pg.init()
 screen = pg.display.set_mode((600,600),pg.RESIZABLE)
 playing = True
