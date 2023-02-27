@@ -13,6 +13,9 @@ keys_list = {}
 for i in keys:
     keys_list[i] = False
 
+clock = pg.time.Clock()
+dT = 0 # delta time
+
 while playing:
     for e in pg.event.get():
         if e.type == pg.QUIT:
@@ -34,6 +37,13 @@ while playing:
         mx, my = pg.mouse.get_pos()
         screen.fill((0,0,0))
         pg.draw.circle(screen,(255,255,255),(mx,my),5)
+        
+        # Player
+        player.animate()
+        player.draw(screen)
+
         pg.display.flip()
+
+        dT = clock.tick()
 
 pg.quit()

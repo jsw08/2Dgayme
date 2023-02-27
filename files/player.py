@@ -8,9 +8,11 @@ class Player:
         self.y = y
         self.width = self.height = 48
 
-        self.cur_mode = "idle" # changes to "idle", "walk", "hit" or "die"
+        self.cur_mode = "walk" # changes to "idle", "walk", "hit" or "die"
         self.cur_frame = 0 # from 0-5/0-3/0-2 depending on self.cur_mode
-        self.cur_direction = "front"
+        self.cur_direction = "right"
+
+        self.animate_perf = -1 # perf counter for going to next frame
 
         # constant variables
         self.num_of_idle_frames = 6
@@ -36,6 +38,8 @@ class Player:
             img_blit = eval(f"self.frames['{self.cur_mode}_{int(self.cur_frame+1)}']")
         screen.blit(img_blit,(self.x, self.y))
 
-    def animate(self, dT):
-        pass
+    def animate(self):
+        if t.perf_counter() > self.animate_perf + 0.1:
+            self.cur_frame = (self.cur_frame + 1) % (eval(f"self.num_of_{self.cur_mode}_frames"))
+            self.animate_perf = t.perf_counter()
         
