@@ -1,3 +1,4 @@
 .venv
 files/__pycache__/*
 files/__pycache__/
+files\__pycache__\player.cpython-310.pyc
