@@ -75,13 +75,13 @@ class Player:
 
         self.vx *= 0.8
         self.vy *= 0.8
-        print(self.vx, self.vy)
+        # print(self.vx, self.vy)
 
         move = pg.math.Vector2(right - left, down - up)
         if move.length_squared() > 0:
             move.scale_to_length(self.speed * dT)
-            move.x *= self.vx
-            move.y *= self.vy
+            move.x *= abs(self.vx)
+            move.y *= abs(self.vy)
             print(self.vx, self.vy)
             pos += move  
             self.rect.topleft = round(pos.x), round(pos.y)
