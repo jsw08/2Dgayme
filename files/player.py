@@ -6,6 +6,9 @@ class Player:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.vx = 0
+        self.vy = 0
+        self.vmax = 1
         self.width = self.height = 48
 
         self.cur_mode = "idle" # changes to "idle", "walk", "hit" or "die"
@@ -39,5 +42,8 @@ class Player:
     def animate(self, dT):
         pass
         
-    def move(self, keys):
+    def move(self, keys, dT):
+        if keys[pg.K_w]:
+            self.vy = min(self.vy + 0.1, self.vmax)
+            self.y += self.vy * dT
         pass

@@ -10,6 +10,7 @@ pg.display.set_caption("template")
 playing = True
 keys = [ pg.K_w, pg.K_a, pg.K_s, pg.K_d ]
 keys_list = {}
+
 for i in keys:
     keys_list[i] = False
 
