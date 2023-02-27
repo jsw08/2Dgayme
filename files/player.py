@@ -39,3 +39,5 @@ class Player:
     def animate(self, dT):
         pass
         
+    def move(self, keys):
+        pass
