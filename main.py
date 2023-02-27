@@ -22,11 +22,13 @@ while playing:
             if e.key == pg.K_ESCAPE:
                 playing = False
             for i in keys_list:
-                if i == e.key: keys_list[i] = True   
+                if i == e.key: 
+                    keys_list[i] = True   
 
         if e.type == pg.KEYUP:
             for i in keys_list:
-                if i != e.key: keys_list[i] = False   
+                if i != e.key: 
+                    keys_list[i] = False   
         pg.event.pump()
 
         mx, my = pg.mouse.get_pos()
