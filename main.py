@@ -40,7 +40,7 @@ while playing:
 
     # Player
     player.animate()
-    player.move(keys, dT)
+    player.move(keys_list, dT)
     player.draw(screen)
 
     pg.display.flip()
