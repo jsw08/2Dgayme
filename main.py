@@ -33,19 +33,16 @@ while playing:
             for i in keys_list:
                 if i != e.key: 
                     keys_list[i] = False   
-        player.move(keys, dT)
+
         pg.event.pump()
 
-        mx, my = pg.mouse.get_pos()
-        screen.fill((0,0,0))
-        pg.draw.circle(screen,(255,255,255),(mx,my),5)
-        
-        # Player
-        player.animate()
-        player.draw(screen)
+    # Player
+    player.animate()
+    player.move(keys, dT)
+    player.draw(screen)
 
-        pg.display.flip()
+    pg.display.flip()
 
-        dT = clock.tick()
+    dT = clock.tick()
 
 pg.quit()
