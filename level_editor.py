@@ -87,9 +87,25 @@ def draw_world(screen, world, world_rotation, scrollx, scrolly, scale, scaled_im
 
             screen.blit(scaled_images[str(block)][orientation], (x_grid_scale, y_grid_scale))
 
+def handle_keys(keys_list, dT, scrollx, scrolly):
+    speed = 0.3 * dT
+    if keys_list[pg.K_w]:
+        scrolly += speed
+    if keys_list[pg.K_a]:
+        scrollx += speed
+    if keys_list[pg.K_s]:
+        scrolly -= speed
+    if keys_list[pg.K_d]:
+        scrollx -= speed
+
+    scrollx = min(scrollx, 0)
+    scrolly = min(scrolly, 0)
+
+    return scrollx, scrolly
+
 scrollx = 0
 scrolly = 0
-scale = 2
+scale = 1
 
 images = load_images()
 scaled_images = scale_images(images,scale)
@@ -100,21 +116,47 @@ pg.display.set_caption("Tile level editor")
 
 world, world_rotation = generate_world(width_world, height_world, seed, octaves)
 
+keys = [pg.K_w, pg.K_a, pg.K_s, pg.K_d, pg.K_r]
+keys_list = {}
+
+for i in keys:
+    keys_list[i] = False
+
+dT = 0
+clock = pg.time.Clock()
+
 while playing:
     for e in pg.event.get():
         if e.type == pg.QUIT:
             playing = False
+
         if e.type == pg.KEYDOWN:
             if e.key == pg.K_ESCAPE:
                 playing = False
-        
-                pg.event.pump()
+            for i in keys_list:
+                if i == e.key: 
+                    keys_list[i] = True   
 
-        mx, my = pg.mouse.get_pos()
-        screen.fill((0,0,0))
-        draw_world(screen, world, world_rotation, scrollx, scrolly, scale, scaled_images)
-        pg.draw.circle(screen,(255,255,255),(mx,my),5)
-        pg.display.flip()
+        if e.type == pg.KEYUP:
+            for i in keys_list:
+                if i == e.key: 
+                    keys_list[i] = False   
+
+        if e.type == pg.MOUSEWHEEL:
+            scale += e.y / 2
+            scale = min(max(scale, 0.5), 5)
+            print(scale)
+            scaled_images = scale_images(images, scale)
+
+        
+        pg.event.pump()
+
+    scrollx, scrolly = handle_keys(keys_list, dT, scrollx, scrolly)
+
+    screen.fill((0,0,0))
+    draw_world(screen, world, world_rotation, scrollx, scrolly, scale, scaled_images)
+    pg.display.flip()
+    dT = clock.tick()
 
 pg.font.quit()
 pg.quit()
